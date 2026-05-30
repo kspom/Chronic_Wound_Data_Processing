@@ -113,8 +113,10 @@ attach_symbol <- function(res) {
   d$SYMBOL  <- gs$SYMBOL[match(d$gene_id, gs$GENEID)]
   d
 }
-dA <- attach_symbol(resA)
-dC <- attach_symbol(resC)
+dA  <- attach_symbol(resA)
+dC  <- attach_symbol(resC)
+d1  <- attach_symbol(res1)
+d2  <- attach_symbol(res2)
 
 per_batch_int <- function(res1, res2, padj_cut, lfc_cut) {
   up1 <- rownames(res1)[!is.na(res1$padj) & res1$padj < padj_cut & res1$log2FoldChange >=  lfc_cut]
@@ -153,13 +155,37 @@ saveRDS(list(resA = resA, res1 = res1, res2 = res2, resC = resC,
              gs = gs, samp = samp),
         file.path(OUT, "originalT2G_DE_final.rds"))
 
+cols <- c("gene_id","SYMBOL","baseMean","log2FoldChange","padj","stat")
+
+# Per-batch + intersection (DESeq2 replication of original MATLAB scheme)
+intersection_tbl <- data.frame(
+  gene_id   = c(pbi$up, pbi$dn),
+  SYMBOL    = c(pbi_up, pbi_dn),
+  direction = c(rep("up_in_non.healer", length(pbi$up)),
+                rep("down_in_non.healer", length(pbi$dn))),
+  Batch1_lfc  = c(res1$log2FoldChange[match(pbi$up, rownames(res1))],
+                  res1$log2FoldChange[match(pbi$dn, rownames(res1))]),
+  Batch1_padj = c(res1$padj[match(pbi$up, rownames(res1))],
+                  res1$padj[match(pbi$dn, rownames(res1))]),
+  Batch2_lfc  = c(res2$log2FoldChange[match(pbi$up, rownames(res2))],
+                  res2$log2FoldChange[match(pbi$dn, rownames(res2))]),
+  Batch2_padj = c(res2$padj[match(pbi$up, rownames(res2))],
+                  res2$padj[match(pbi$dn, rownames(res2))])
+)
+
 write_xlsx(
   list(
-    combined_per_sample = dA[order(dA$padj), c("gene_id","SYMBOL","baseMean","log2FoldChange","padj","stat")],
-    pseudobulk          = dC[order(dC$padj), c("gene_id","SYMBOL","baseMean","log2FoldChange","padj","stat")],
-    original_8_in_new   = tab
+    combined_per_sample    = dA[order(dA$padj), cols],
+    per_batch_batch1       = d1[order(d1$padj), cols],
+    per_batch_batch2       = d2[order(d2$padj), cols],
+    per_batch_intersection = intersection_tbl,
+    pseudobulk             = dC[order(dC$padj), cols],
+    original_8_in_new      = tab
   ),
   file.path(RES, "DE_originalT2G_final.xlsx")
 )
+
+cat("\n=== Per-batch + intersection table (saved as sheet per_batch_intersection) ===\n")
+print(intersection_tbl, row.names = FALSE)
 
 cat("\nDone.\n")
