@@ -7,7 +7,7 @@ load ChronicWoundData.mat
 % filename='downregulated_in_nonhealers4.pdf';
 
 % reading gene list from file
-T=readtable('DE_batches_comparison.xlsx','Sheet','Lists_for_reading');
+T=readtable('S7_Table_DE_batches_comparison.xlsx','Sheet','Lists_for_reading');
 GeneList1=T{:,2};
 GeneList=GeneList1(10:18);
 filename='down_in_nonhealers2.pdf';
