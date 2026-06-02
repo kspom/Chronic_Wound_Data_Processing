@@ -1,5 +1,5 @@
 load ChronicWoundData.mat
-T=readtable('qPCR results.xlsx');
+T=readtable('S11_Table_qPCR_results.xlsx');
 SampleName=T{:,1};
 for i=1:numel(SampleName)
     n(i)=find(ismember(Metadata_filename,SampleName(i)));
