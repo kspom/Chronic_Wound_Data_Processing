@@ -1,7 +1,7 @@
 # Figure S17: 8-panel RIN / depth / detected-genes scatterplots for both batches.
 # Inputs:
 #   cache/txi_originalT2G_*.rds (gene counts, built by 02_import_originalT2G.R)
-#   Sample_Quality_Data.xlsx     (per-sample RIN + mapped reads, deposited as supplementary)
+#   S1_Table_Sample_Quality.xlsx (per-sample RIN + mapped reads, deposited as supplementary)
 # Output:
 #   results/Figure_S17.pdf
 
@@ -36,7 +36,7 @@ gc1 <- gene_counts(file.path(OUT, "txi_originalT2G_batch1.rds"))
 gc2 <- gene_counts(file.path(OUT, "txi_originalT2G_batch2.rds"))
 
 # Sample quality data (per-sample RIN + mapped_reads_M)
-sq <- read_excel("Sample_Quality_Data.xlsx")
+sq <- read_excel("S1_Table_Sample_Quality.xlsx")
 sq <- sq %>% left_join(bind_rows(gc1, gc2), by = "sample")
 
 b1 <- sq %>% filter(batch == "Batch1",
