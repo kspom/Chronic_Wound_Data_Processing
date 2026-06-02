@@ -5,7 +5,7 @@ suppressPackageStartupMessages({
   library(dplyr)
 })
 
-m <- read_excel("Chronic_Wound_Metadata.xlsx")
+m <- read_excel("S4_Table_Chronic_Wound_Metadata.xlsx")
 m$healed <- gsub("Non-Healer", "Non-healer", m$healed)
 
 # Batch 1
