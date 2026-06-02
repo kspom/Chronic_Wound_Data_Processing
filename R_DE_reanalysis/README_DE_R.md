@@ -29,9 +29,9 @@ Before running, place the following input files **in the same directory as the f
 ├── 05_treatment_covariate.R
 ├── 06_sample_quality_figure.R
 ├── README_DE_R.md
-├── Chronic_Wound_Metadata.xlsx           ← copy from the data deposit
+├── S4_Table_Chronic_Wound_Metadata.xlsx  ← copy from the data deposit
 ├── converted_transcripts_to_genes.csv    ← copy from the data deposit
-├── Sample_Quality_Data.xlsx              ← copy from the data deposit (used by 06_sample_quality_figure.R)
+├── S1_Table_Sample_Quality.xlsx          ← copy from the data deposit (used by 06_sample_quality_figure.R)
 ├── Cohort1/                              ← copy from the data deposit
 │   ├── D11_CKDL220026941_quant.sf
 │   ├── ...
