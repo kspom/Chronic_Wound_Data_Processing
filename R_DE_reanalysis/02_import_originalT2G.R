@@ -18,7 +18,7 @@ saveRDS(t2g, file.path(OUT, "tx2gene_originalT2G.rds"))
 tx2gene <- t2g %>% select(ensembl_transcript_id, ensembl_gene_id)
 
 # Sample manifest
-meta <- read_excel("Chronic_Wound_Metadata.xlsx")
+meta <- read_excel("S4_Table_Chronic_Wound_Metadata.xlsx")
 meta$healed <- gsub("Non-Healer", "Non-healer", meta$healed)
 
 list_quants <- function(dir, id_strip) {
