@@ -109,6 +109,44 @@ ax.XColor = 'w';
 end
 exportgraphics(f5,'markov_chain.pdf','ContentType','vector');
 
+%% Per-patient state occupancy and transition counts
+% (S15 Table of the manuscript; input of PatientResampling.m)
+% States: 1 = Impairment (Imp), 2 = Proliferation (Prol), 3 = Inflammation (Infl).
+% Transitions are counted between consecutive weeks only, as above.
+stateNames = {'Imp','Prol','Infl'};
+np   = numel(up);
+Npat = zeros(np,3);      % number of samples of the patient in each state
+Tpat = zeros(np,9);      % transition counts, columns: Imp_to_Imp, Imp_to_Prol, ..., Infl_to_Infl
+for i = 1:np
+    k = find(ismember(p,up(i)));
+    [~,i1] = sort(w(k));
+    STu = ST(k(i1));
+    wsu = w(k(i1));
+    for a = 1:3
+        Npat(i,a) = sum(STu==a);
+    end
+    for j = 1:numel(wsu)-1
+        if wsu(j+1)-wsu(j)==1
+            c = (STu(j)-1)*3 + STu(j+1);
+            Tpat(i,c) = Tpat(i,c) + 1;
+        end
+    end
+end
+tn = cell(1,9); c = 0;
+for a = 1:3
+    for b = 1:3
+        c = c+1; tn{c} = [stateNames{a} '_to_' stateNames{b}];
+    end
+end
+grp = repmat({'Non-healer'},np,1); grp(uh==1) = {'Healer'};
+PatientTable = [table(up, grp, sum(Npat,2), 'VariableNames', {'patient','group','n_samples'}), ...
+                array2table(Npat, 'VariableNames', strcat('n_',stateNames)), ...
+                array2table(Tpat, 'VariableNames', tn)];
+writetable(PatientTable, 'Patient_transitions.xlsx');
+fprintf('Patient_transitions.xlsx written: %d patients; transitions healers %d, non-healers %d\n', ...
+    np, sum(sum(Tpat(uh==1,:))), sum(sum(Tpat(uh==0,:))));
+clear stateNames np i k i1 STu wsu a b c j tn grp
+
 function h = circle(x,y,r,color)
 hold on
 th = 0:pi/50:2*pi;

@@ -9,12 +9,12 @@
 %                   deriving clusters, plotting scatterplots and
 %                   cluster time-series
 %   Timeseries_plot:
-%                   timeseries of gene expression, non-normalized, 
+%                   timeseries of gene expression, non-normalized,
 %                   one cluster, each patient
 %   validation_pcr_scatters:
 %                   comparing RNAseq and qPCR, scatterplots
 %   qpcr_validation_barplots:
-%                   comparing RNAseq and qPCR, barplots   
+%                   comparing RNAseq and qPCR, barplots
 %   PrinCompAnalysis:
 %                   PCA for non-normalized gene expression data
 %   markov_chain_model:
@@ -22,9 +22,14 @@
 %   DEanalysis:
 %                   differentially expressed genes between healers and
 %                   non-healers: for all, treated and non-treated samples
-%   
-%
-% sensitivity analyses (Fig S24):
+
+% sensitivity analyses (Fig S24, S15-S16 Tables):
+%   PatientResampling:
+%                   patient-level bootstrap, permutation test and
+%                   leave-one-patient-out for transition probabilities and
+%                   group differences;
+%                   input Patient_transitions.xlsx (output of markov_chain_model),
+%                   output Resampling_results.xlsx
 %   RemoveLowRIN:
 %                   removes samples with RIN below a cut-off (RINcut);
 %                   input ChronicWoundData.mat and S1_Table_Sample_Quality.xlsx,
@@ -37,4 +42,3 @@
 %   the load line at the top of BatchEffectCorrection to the corresponding
 %   file (commented lines are provided), then run BatchEffectCorrection and
 %   markov_chain_model.
-

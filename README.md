@@ -16,10 +16,11 @@ Analysis of longitudinal transcriptomic data from human chronic wounds (diabetic
 | `markov_chain_model` | Markov Chain Model for healers and non-healers |
 | `DEanalysis` | differentially expressed genes between healers and non-healers: for all, treated and non-treated samples |
 
-## Sensitivity analyses (Fig S24)
+## Sensitivity analyses (Fig S24, S15–S16 Tables)
 
 | Script | Purpose |
 |---|---|
+| `PatientResampling` | patient-level bootstrap, permutation test and leave-one-patient-out for transition probabilities and group differences; input `Patient_transitions.xlsx` (output of `markov_chain_model`), output `Resampling_results.xlsx` |
 | `RemoveLowRIN` | removes samples with RIN below a cut-off (`RINcut`); input `ChronicWoundData.mat` and `S1_Table_Sample_Quality.xlsx`, output `ChronicWoundData_lowRIN.mat` |
 | `NormalizeCounts` | median-of-ratios library-size normalization of counts; input `ChronicWoundData.mat`, output `ChronicWoundData_normalized.mat` |
 
