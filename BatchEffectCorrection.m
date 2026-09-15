@@ -1,6 +1,8 @@
 %% Batch Correction
 
 load ChronicWoundData.mat %result of ReadData.m
+%load ChronicWoundData_lowRIN.mat %result of RemoveLowRIN.m (sensitivity analysis: RIN)
+%load ChronicWoundData_normalized.mat %result of NormalizeCounts.m (sensitivity analysis: normalization)
 
 data=log2(1+data);
 for i=1:numel(Gene)

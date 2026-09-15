@@ -23,3 +23,18 @@
 %                   differentially expressed genes between healers and
 %                   non-healers: for all, treated and non-treated samples
 %   
+%
+% sensitivity analyses (Fig S24):
+%   RemoveLowRIN:
+%                   removes samples with RIN below a cut-off (RINcut);
+%                   input ChronicWoundData.mat and S1_Table_Sample_Quality.xlsx,
+%                   output ChronicWoundData_lowRIN.mat
+%   NormalizeCounts:
+%                   median-of-ratios library-size normalization of counts;
+%                   input ChronicWoundData.mat,
+%                   output ChronicWoundData_normalized.mat
+%   To run the cluster and Markov-chain analysis on either dataset, switch
+%   the load line at the top of BatchEffectCorrection to the corresponding
+%   file (commented lines are provided), then run BatchEffectCorrection and
+%   markov_chain_model.
+
